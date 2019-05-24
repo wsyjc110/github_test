@@ -17,12 +17,24 @@ for i in range(code_number):
     print(val)
 db = mdb.connect('localhost','root','root','mytest',charset='utf8')
 cursor =db.cursor()
-f = open('my_code.txt')
-for line in f.readlines():
-    cursor.execute("insert into t1 (code) values ('%s')"%(line.strip()))
-    db.commit()
-f.close()
+try:
+    f = open('my_code.txt')
+    for line in f.readlines():
+        cursor.execute("insert into t1 (code) values ('%s')"%(line.strip()))
+        db.commit()
+    f.close()
+except:
+    db.rollback()
+db.close()
 print('执行完毕！！！！')
+
+
+
+
+
+
+
+
 
 
 
