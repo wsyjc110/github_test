@@ -1,0 +1,13 @@
+import random,string,redis
+chars = string.ascii_letters + string.digits
+re = redis.Redis(host='localhost',port='6379',db = 0,decode_responses=True)
+count = 1
+for i in range(10):
+    codes = []
+    for j in range(5):
+        code = ''.join(random.sample(chars,4))
+        codes.append(code)
+    re.lpush('code','-'.join(codes))
+for k in re.lrange('code',0,100):
+    print(count,k)
+    count = count+1
